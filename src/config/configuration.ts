@@ -6,7 +6,7 @@ export default () => ({
   },
   DB: {
     HOST: process.env.DB_HOST,
-    PORT: process.env.DB_PORT,
+    PORT: parseInt(process.env.DB_PORT, 10),
     NAME: process.env.DB_NAME,
     USER: process.env.DB_USER,
     PASSWORD: process.env.DB_PASSWORD,
@@ -14,14 +14,10 @@ export default () => ({
 });
 
 export const ENV_VALIDATION_SCHEMA = Joi.object({
-  APP: Joi.object({
-    PORT: Joi.number().default(3000),
-  }),
-  DB: Joi.object({
-    HOST: Joi.string().required(),
-    PORT: Joi.number().required(),
-    NAME: Joi.string().required(),
-    USER: Joi.string().required(),
-    PASSWORD: Joi.string().required(),
-  }),
+  PORT: Joi.number().default(3000),
+  DB_HOST: Joi.string().required(),
+  DB_PORT: Joi.number().required(),
+  DB_NAME: Joi.string().required(),
+  DB_USER: Joi.string().required(),
+  DB_PASSWORD: Joi.string().required(),
 });
