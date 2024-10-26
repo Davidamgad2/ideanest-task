@@ -4,7 +4,8 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import configuration, { ENV_VALIDATION_SCHEMA } from './config/configuration';
-
+import { AuthModule } from './auth/auth.module';
+import { RedisAppModule } from './redis/redis.module';
 @Module({
   imports: [
     UsersModule,
@@ -35,6 +36,8 @@ import configuration, { ENV_VALIDATION_SCHEMA } from './config/configuration';
       },
       inject: [ConfigService],
     }),
+    AuthModule,
+    RedisAppModule,
   ],
   controllers: [],
   providers: [],
