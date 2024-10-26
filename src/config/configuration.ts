@@ -12,6 +12,11 @@ export default () => ({
     USER: process.env.DB_USER,
     PASSWORD: process.env.DB_PASSWORD,
   },
+  REDIS: {
+    HOST: process.env.REDIS_HOST,
+    PORT: parseInt(process.env.REDIS_PORT, 10),
+    PASSWORD: process.env.REDIS_PASSWORD,
+  },
 });
 
 export const ENV_VALIDATION_SCHEMA = Joi.object({
@@ -22,4 +27,7 @@ export const ENV_VALIDATION_SCHEMA = Joi.object({
   DB_NAME: Joi.string().required(),
   DB_USER: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
+  REDIS_HOST: Joi.string().required(),
+  REDIS_PORT: Joi.number().required(),
+  REDIS_PASSWORD: Joi.string().required(),
 });
