@@ -1,17 +1,41 @@
 version: '3.8'
-
 services:
+  app:
+    build: .
+    container_name: nest-app
+    ports:
+      - "8080:3000"
+    environment:
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - DB_NAME=ideanest
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - APP_PORT=3000
+      - APP_HOST=0.0.0.0
+      - JWT_ACCESS_SECRET=Ci70an0kUH+PvS4AdZ7F1/Pl8U83M5Dh9y+PhI16hFT239GoBrLdfr2MN3w2uSVs5nAQwCiPzHXVKVt5qLk0mFplChKNTTPzUJOSO6X67QI33bkmscrkGkfuM0u9Hv5sWOF5yzf6ojYQ9XmOt9KcpDJq7E9T48syWjb5Ju6WFR9bve3fpM41Vp7n7dX2bGHOTBxJ8CrRgpTV5XiBio8l1gjbZxZfLUPKnJE1LYYw/u5aksH1u9jkooBnY7Ub9mfFHeybMZvQvoZEUjbNXF59NCYm2HxDZOvNQntMX7pkO2WbkFseC0yoEEuHX43ezTn1wdM0nKjfagYLmP4rSJhhmg==
+      - JWT_REFRESH_SECRET=8o5V+KsvVVDLJhnbe8nRDNzNnuZ49s/ncSHdNexG0n6Y7mqnV8aDRgK9YFYrBqegJL9Cy38QMUARfukFcPoxckk05peEpaJbsyPEtR8uZ2FhjxkJco4VmcsDNsMln5jWFJr78rbYVbxAAQrhHvtI2BT6ADv3L/fBFmW75TUwsf8cy2BB7hYzEMz9k5DM+t2+4fX2Jki5YAKPGwhWccPC3jOzIacEUqS2Ghe4iVn1yR8sEpyJZCzVxjCGkGQufVMG9qk2gkn4jHevKTrLy3RrjpCdyAC+VtPlF37AuNDJofCK8tXFyvwZYuF+S5EyVizfZwoAR0kmS9adTC5TkY2JEQ==
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=auth
+    depends_on:
+      - mongodb
+      - redis
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
-    ports:
-      - "27017:27017"
     volumes:
       - mongo-data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    environment:
+      - REDIS_PASSWORD=auth
 
 volumes:
   mongo-data:
