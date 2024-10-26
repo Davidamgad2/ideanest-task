@@ -18,14 +18,19 @@ import configuration, { ENV_VALIDATION_SCHEMA } from './config/configuration';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
-        const dbUser = configService.get<string>('DB_USER');
-        const dbPassword = configService.get<string>('DB_PASSWORD');
-        const dbHost = configService.get<string>('DB_HOST');
-        const dbPort = configService.get<string>('DB_PORT');
-        const dbName = configService.get<string>('DB_NAME');
+        const {
+          USER: dbUser,
+          PASSWORD: dbPassword,
+          HOST: dbHost,
+          PORT: dbPort,
+          NAME: dbName,
+        } = configService.get('DB');
+
+        const credentials = dbPassword ? `${dbUser}:${dbPassword}@` : '';
+        const uri = `mongodb://${credentials}${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
         return {
-          uri: `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`,
+          uri,
         };
       },
       inject: [ConfigService],

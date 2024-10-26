@@ -3,6 +3,7 @@ import * as Joi from 'joi';
 export default () => ({
   APP: {
     PORT: parseInt(process.env.PORT, 10) || 3000,
+    HOST: process.env.HOST,
   },
   DB: {
     HOST: process.env.DB_HOST,
@@ -14,7 +15,8 @@ export default () => ({
 });
 
 export const ENV_VALIDATION_SCHEMA = Joi.object({
-  PORT: Joi.number().default(3000),
+  APP_PORT: Joi.number().default(3000),
+  APP_HOST: Joi.string().required(),
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().required(),
   DB_NAME: Joi.string().required(),
